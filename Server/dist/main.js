@@ -1,21 +1,29 @@
+
+/*eslint linebreak-style: ["error", "windows"]*/
+/*eslint padded-blocks: ["error", "always"]*/
+
 'use strict';
 
 var _category = require('../entity/category');
 
 var _category2 = _interopRequireDefault(_category);
 
+var _redis = require('../node_modules/redis');
+
+var _redis2 = _interopRequireDefault(_redis);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var redis = require("redis");
-var client = redis.createClient('6379', '127.0.0.1');
+var client = _redis2.default.createClient('6379', '127.0.0.1');
 
 client.on('connect', function () {
-    console.log('connected');
 
     var vhh = new _category2.default();
+
+    console.log(vhh.getEntityName());
+
     vhh.catId = 1;
     vhh.ahihi = 2;
-    vhh.setCatId(2);
     client.set(vhh.catId, JSON.stringify(vhh));
 });
 //# sourceMappingURL=main.js.map

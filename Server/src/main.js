@@ -1,17 +1,24 @@
+
+/*eslint linebreak-style: ["error", "windows"]*/
+/*eslint padded-blocks: ["error", "always"]*/
+
 'use strict';
 
 import category from '../entity/category';
 
-let redis = require("redis");
-let client = redis.createClient('6379', '127.0.0.1');
+import redis from '../node_modules/redis';
 
-client.on('connect', function () {
-    console.log('connected');
+const client = redis.createClient('6379', '127.0.0.1');
 
-    let vhh = new category();
+client.on('connect', () => {
+
+    const vhh = new category();
+
+    console.log(vhh.getEntityName());
+
     vhh.catId = 1;
     vhh.ahihi = 2;
-    vhh.setCatId(2);
     client.set(vhh.catId, JSON.stringify(vhh));
 
 });
+
