@@ -14,8 +14,24 @@ module.exports = class category {
         return this.catId_Prop;
     }
 
-    set catId(catId) {
-        this.catId_Prop = catId;
+    set catId(value) {
+        this.catId_Prop = value;
+    }
+
+    get quantityPost() {
+        return this.quantityPost_Prop;
+    }
+
+    set quantityPost(value) {
+        this.quantityPost_Prop = value;
+    }
+
+    get catName() {
+        return this.catId_Prop;
+    }
+
+    set catName(value) {
+        this.catName_Prop = value;
     }
 
     getEntityName() {
