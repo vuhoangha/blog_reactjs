@@ -14,10 +14,10 @@ client.on('connect', () => {
 
     const vhh = new category();
 
-    console.log(vhh.getEntityName());
+    vhh.catId = 10;
 
-    vhh.catId = 1;
-    vhh.ahihi = 2;
+    console.log(vhh.catId);
+
     client.set(vhh.catId, JSON.stringify(vhh));
 
 });

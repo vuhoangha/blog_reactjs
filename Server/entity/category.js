@@ -5,10 +5,19 @@
 
 module.exports = class category {
     constructor() {
-        this.catId = null;
-        this.quantityPost = 0;
-        this.catName = '';
+        this.catId_Prop = null;
+        this.quantityPost_Prop = 0;
+        this.catName_Prop = '';
     }
+
+    get catId() {
+        return this.catId_Prop;
+    }
+
+    set catId(catId) {
+        this.catId_Prop = catId;
+    }
+
     getEntityName() {
         return 'category';
     }
