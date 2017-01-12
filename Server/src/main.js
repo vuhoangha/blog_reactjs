@@ -4,21 +4,8 @@
 
 'use strict';
 
-import category from '../entity/category';
+import actor from './entity/actor';
 
-import redis from '../node_modules/redis';
+const haha = new actor();
 
-const client = redis.createClient('6379', '127.0.0.1');
-
-client.on('connect', () => {
-
-    const vhh = new category();
-
-    vhh.catId = 10;
-
-    console.log(vhh.catId);
-
-    client.set(vhh.catId, JSON.stringify(vhh));
-
-});
-
+console.log(haha.getKey());
