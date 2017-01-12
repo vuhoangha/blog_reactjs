@@ -16,9 +16,9 @@ module.exports = {
         (0, _exe_cmd2.default)('hget', [entity, key], callback);
     },
 
-    selectByMultiKey: function selectByMultiKey(entity, listKey, callback) {
+    selectByMultiKey: function selectByMultiKey(entity, listKey, callback, res) {
         listKey.unshift(entity);
-        (0, _exe_cmd2.default)('hmget', listKey, callback);
+        (0, _exe_cmd2.default)('hmget', listKey, callback, res);
     }
 
 };

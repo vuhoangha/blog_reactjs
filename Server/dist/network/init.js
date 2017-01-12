@@ -20,11 +20,23 @@ var _entity_register = require('../entity/entity_register');
 
 var _entity_register2 = _interopRequireDefault(_entity_register);
 
+var _util = require('../util');
+
+var _util2 = _interopRequireDefault(_util);
+
+var _select = require('../database/select');
+
+var _select2 = _interopRequireDefault(_select);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(_bodyParser2.default.json());
+
+var callbackGet = function callbackGet(data, res) {
+    res.send(data);
+};
 
 var _iteratorNormalCompletion = true;
 var _didIteratorError = false;
@@ -37,7 +49,15 @@ try {
         var thisRouter = '/' + entity;
 
         app.get(thisRouter, function (req, res) {
-            res.send('Hello Get Id');
+            var entityName = req.route.path.split('/')[1];
+            var listKey = [];
+            if (_util2.default.isExistProperty(req.query, 'key')) {
+                var listKeyObject = JSON.parse(req.query.key);
+                for (var i = 0; i < listKeyObject.length; i++) {
+                    listKey.push(JSON.stringify(listKeyObject[i]));
+                }
+            }
+            _select2.default.selectByMultiKey(entityName, listKey, callbackGet, res);
         });
 
         app.post(thisRouter, function (req, res) {

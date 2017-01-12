@@ -21,11 +21,15 @@ client.on('error', () => {
 
 });
 
-module.exports = (command, arg, callback) => {
+module.exports = (command, arg, callback, res) => {
 
     if (isConnect) {
 
-        client.send_command(command, arg, callback);
+        client.send_command(command, arg, (err, data) => {
+
+            callback(data, res);
+            
+        });
 
     } else {
 

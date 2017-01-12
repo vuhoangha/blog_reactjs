@@ -4,8 +4,4 @@
 
 'use strict';
 
-import actor from './entity/actor';
-
-const haha = new actor();
-
-console.log(haha.getKey());
+import actor from './network/init';

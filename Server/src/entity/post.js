@@ -18,7 +18,7 @@ module.exports = class post {
         this.summary = '';
         this.content = '';
         this.quantityView = 0;
-        
+
         if (!data) return;
         for (const field of this.fields()) {
             if (util.isExistProperty(data, field)) this[field] = data[field];
@@ -47,7 +47,7 @@ module.exports = class post {
 
     //entity name
     getEntityName() {
-        return 'actor';
+        return 'post';
     }
 
     //custom function

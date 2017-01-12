@@ -23,11 +23,14 @@ client.on('error', function () {
     isConnect = false;
 });
 
-module.exports = function (command, arg, callback) {
+module.exports = function (command, arg, callback, res) {
 
     if (isConnect) {
 
-        client.send_command(command, arg, callback);
+        client.send_command(command, arg, function (err, data) {
+
+            callback(data, res);
+        });
     } else {
 
         callback(null);

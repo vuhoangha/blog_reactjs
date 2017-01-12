@@ -78,7 +78,7 @@ module.exports = function () {
     }, {
         key: 'getEntityName',
         value: function getEntityName() {
-            return 'actor';
+            return 'post';
         }
 
         //custom function

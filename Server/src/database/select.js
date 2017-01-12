@@ -13,9 +13,9 @@ module.exports = {
         exeCmd('hget', [entity, key], callback);
     },
 
-    selectByMultiKey: (entity, listKey, callback) => {
+    selectByMultiKey: (entity, listKey, callback, res) => {
         listKey.unshift(entity);
-        exeCmd('hmget', listKey, callback);
+        exeCmd('hmget', listKey, callback, res);
     }
 
 };
