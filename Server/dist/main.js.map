@@ -1,1 +1,0 @@
-{"version":3,"sources":["../src/main.js"],"names":[],"mappings":";AACA;AACA;;AAEA;;AAEA","file":"main.js","sourcesContent":["\r\n/*eslint linebreak-style: [\"error\", \"windows\"]*/\r\n/*eslint padded-blocks: [\"error\", \"always\"]*/\r\n\r\n'use strict';\r\n\r\nimport actor from './network/init';\r\n"]}
