@@ -14,6 +14,11 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 
 const callbackGet = (data, res) => {
     res.send(data);
@@ -33,7 +38,11 @@ for (const entity of listEntityRegister) {
                 listKey.push(JSON.stringify(listKeyObject[i]));
             }
         }
-        select.selectByMultiKey(entityName, listKey, callbackGet, res);
+        if (listKey.length > 0) {
+            select.selectByMultiKey(entityName, listKey, callbackGet, res);
+        } else {
+            select.selectAll(entityName, callbackGet, res);
+        }
     });
 
     app.post(thisRouter, (req, res) => {

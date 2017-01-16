@@ -2,8 +2,8 @@
 const exeCmd = require('./exe_cmd');
 
 module.exports = {
-    selectAll: (entity, callback) => {
-        exeCmd('hvals', [entity], callback);
+    selectAll: (entity, callback, res) => {
+        exeCmd('hvals', [entity], callback, res);
     },
 
     selectByKey: (entity, key, callback) => {

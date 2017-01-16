@@ -1,16 +1,31 @@
 {
-  "name": "Client",
+  "name": "client",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
+  "keywords": [
+    "react",
+    "flux",
+    "store"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "ejs": "^2.5.5",
-    "express": "^4.14.0"
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.13.1",
+    "flux": "^3.1.2",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.1",
+    "react": "^15.4.2",
+    "reactify": "^1.1.1",
+    "underscore": "^1.8.3"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "react-dom": "^15.4.2"
   }
 }

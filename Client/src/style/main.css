@@ -1,0 +1,8 @@
+.summary-post{
+    padding: 20px;
+}
+
+.summary-post > h3{
+    margin: 10px 0;
+    cursor: pointer;
+}
