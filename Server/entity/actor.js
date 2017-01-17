@@ -1,26 +1,27 @@
 
-const util = require('../util');
+const base = require('./base');
+
+const defaultData = {
+    acId: 0,
+    quantityPost: 0,
+    acName: '',
+};
 
 /*
 *class 'actor'
 */
-
-module.exports = class actor {
+module.exports = class actor extends base {
 
     /**
      * constructor get data is 'actor'.
      * if 'actor' null or undefined , it's setting property value default
      * @param {actor} data is actor
      */
-    constructor(data) {
-        this.acId = 0;
-        this.quantityPost = 0;
-        this.acName = '';
-
-        if (!data) return;
-        for (const field of this.fields()) {
-            if (util.isExistProperty(data, field)) this[field] = data[field];
-        }
+    constructor(data = defaultData) {
+        super(data);
+        this.acId = data.acId;
+        this.quantityPost = data.quantityPost;
+        this.acName = data.acName;
     }
 
     /**
@@ -47,18 +48,6 @@ module.exports = class actor {
      */
     getEntityName() {
         return 'actor';
-    }
-
-    /**
-     * @return {Object} key type object
-     */
-    getKey() {
-        const keyObject = {};
-
-        for (const key of this.keys()) {
-            keyObject[key] = this[key];
-        }
-        return keyObject;
     }
 
 };
