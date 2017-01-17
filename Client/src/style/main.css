@@ -2,7 +2,7 @@
     padding: 20px;
 }
 
-.summary-post > h3{
+.summary-post > div{
     margin: 10px 0;
     cursor: pointer;
 }

@@ -1,6 +1,7 @@
 const React = require('react');
 const axios = require('axios');
-const AppStore = require('../stores/app-store');
+const DetailPost = require('./detail-post');// eslint-disable-line no-unused-vars
+const ReactDom = require('react-dom');
 
 /**
  * Create SummaryPost class
@@ -44,6 +45,14 @@ class SummaryPost extends React.Component {
     }
 
     /**
+    * @param {html} element loading
+    */
+    viewDetail(post) {
+        console.log(post);
+        ReactDom.render(<DetailPost post={post} />, document.getElementById('main'));
+    }
+
+    /**
      * @return {html} element loading
      */
     renderLoading() {
@@ -60,8 +69,10 @@ class SummaryPost extends React.Component {
 
         const posts = this.state.posts.map(post =>
             <div className='summary-post'>
-                <h3>{post.postTitle}</h3>
-                <div>{post.content}</div>
+                <div onClick={() => { this.viewDetail(post); } }>
+                    {post.postTitle}
+                </div>
+                <div>{post.summary}</div>
             </div>
         );
 

@@ -22272,6 +22272,43 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":180}],203:[function(require,module,exports){
 const React = require('react');
+
+/**
+ * Create DetailPost class
+ */
+class DetailPost extends React.Component {
+    /**
+     * init class
+     */
+    constructor(props) {
+        console.log(props);
+        super(props);
+        this.state = {
+            post: props.post,
+        };
+    }
+
+    /**
+     * @return {component} SummaryPost
+     * render HTML
+     */
+    render() {
+        return (
+            React.createElement("div", null, 
+                React.createElement("div", {className: "summary-post"}, 
+                    React.createElement("h3", null, this.state.post.postTitle), 
+                    React.createElement("div", null, this.state.post.summary)
+                )
+            )
+        );
+    }
+}
+
+module.exports = DetailPost;
+
+
+},{"react":202}],204:[function(require,module,exports){
+const React = require('react');
 const SummaryPost = require('../components/summary-post');// eslint-disable-line no-unused-vars
 
 const Main = React.createClass({displayName: "Main", render() {
@@ -22283,10 +22320,11 @@ const Main = React.createClass({displayName: "Main", render() {
 module.exports = Main;
 
 
-},{"../components/summary-post":204,"react":202}],204:[function(require,module,exports){
+},{"../components/summary-post":205,"react":202}],205:[function(require,module,exports){
 const React = require('react');
 const axios = require('axios');
-const AppStore = require('../stores/app-store');
+const DetailPost = require('./detail-post');// eslint-disable-line no-unused-vars
+const ReactDom = require('react-dom');
 
 /**
  * Create SummaryPost class
@@ -22330,6 +22368,14 @@ class SummaryPost extends React.Component {
     }
 
     /**
+    * @param {html} element loading
+    */
+    viewDetail(post) {
+        console.log(post);
+        ReactDom.render(React.createElement(DetailPost, {post: post}), document.getElementById('main'));
+    }
+
+    /**
      * @return {html} element loading
      */
     renderLoading() {
@@ -22346,8 +22392,10 @@ class SummaryPost extends React.Component {
 
         const posts = this.state.posts.map(post =>
             React.createElement("div", {className: "summary-post"}, 
-                React.createElement("h3", null, post.postTitle), 
-                React.createElement("div", null, post.content)
+                React.createElement("div", {onClick: () => { this.viewDetail(post); }}, 
+                    post.postTitle
+                ), 
+                React.createElement("div", null, post.summary)
             )
         );
 
@@ -22386,7 +22434,7 @@ class SummaryPost extends React.Component {
 module.exports = SummaryPost;
 
 
-},{"../stores/app-store":206,"axios":1,"react":202}],205:[function(require,module,exports){
+},{"./detail-post":203,"axios":1,"react":202,"react-dom":51}],206:[function(require,module,exports){
 const React = require('react');// eslint-disable-line no-unused-vars
 const ReactDom = require('react-dom');
 const Main = require('./components/main');// eslint-disable-line no-unused-vars
@@ -22394,21 +22442,4 @@ const Main = require('./components/main');// eslint-disable-line no-unused-vars
 ReactDom.render(React.createElement(Main, null), document.getElementById('main'));
 
 
-},{"./components/main":203,"react":202,"react-dom":51}],206:[function(require,module,exports){
-const posts = [
-    {
-        title: 'Javascript 2016',
-        content: 'Yes so fukin good',
-    },
-    {
-        title: 'C# 2016',
-        content: 'Yes so fukin good',
-    },
-];
-
-const AppStore = { getPost: () => posts };
-
-module.exports = AppStore;
-
-
-},{}]},{},[205])
+},{"./components/main":204,"react":202,"react-dom":51}]},{},[206])
