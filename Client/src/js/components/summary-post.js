@@ -48,7 +48,6 @@ class SummaryPost extends React.Component {
     * @param {html} element loading
     */
     viewDetail(post) {
-        console.log(post);
         ReactDom.render(<DetailPost post={post} />, document.getElementById('main'));
     }
 

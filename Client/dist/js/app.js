@@ -22279,13 +22279,23 @@ const React = require('react');
 class DetailPost extends React.Component {
     /**
      * init class
+     * @param {Object} props prop truyen vao tu html
      */
     constructor(props) {
-        console.log(props);
         super(props);
         this.state = {
             post: props.post,
+            sum: 0,
         };
+    }
+
+    /**
+     * plus state num one point
+     */
+    addSum() {
+        this.setState({
+            sum: ++this.state.sum,
+        });
     }
 
     /**
@@ -22295,9 +22305,11 @@ class DetailPost extends React.Component {
     render() {
         return (
             React.createElement("div", null, 
-                React.createElement("div", {className: "summary-post"}, 
+                React.createElement("div", null, 
                     React.createElement("h3", null, this.state.post.postTitle), 
-                    React.createElement("div", null, this.state.post.summary)
+                    React.createElement("div", null, this.state.post.summary), 
+                    React.createElement("button", {onClick: () => { this.addSum(); }}, "Add"), 
+                    React.createElement("div", null, this.state.sum)
                 )
             )
         );
@@ -22371,7 +22383,6 @@ class SummaryPost extends React.Component {
     * @param {html} element loading
     */
     viewDetail(post) {
-        console.log(post);
         ReactDom.render(React.createElement(DetailPost, {post: post}), document.getElementById('main'));
     }
 

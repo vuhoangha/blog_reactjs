@@ -6,13 +6,23 @@ const React = require('react');
 class DetailPost extends React.Component {
     /**
      * init class
+     * @param {Object} props prop truyen vao tu html
      */
     constructor(props) {
-        console.log(props);
         super(props);
         this.state = {
             post: props.post,
+            sum: 0,
         };
+    }
+
+    /**
+     * plus state num one point
+     */
+    addSum() {
+        this.setState({
+            sum: ++this.state.sum,
+        });
     }
 
     /**
@@ -22,9 +32,11 @@ class DetailPost extends React.Component {
     render() {
         return (
             <div>
-                <div className='summary-post'>
+                <div>
                     <h3>{this.state.post.postTitle}</h3>
                     <div>{this.state.post.summary}</div>
+                    <button onClick={() => { this.addSum(); } }>Add</button>
+                    <div>{this.state.sum}</div>
                 </div>
             </div>
         );
