@@ -1,7 +1,7 @@
 
 const redis = require('redis');
 
-const client = redis.createClient('6379', '127.0.0.1');
+const client = redis.createClient('11039', 'redis-11039.c10.us-east-1-4.ec2.cloud.redislabs.com', { password: '123' });
 
 let isConnect = false;
 
