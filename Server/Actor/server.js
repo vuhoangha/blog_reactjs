@@ -32,7 +32,10 @@ const callbackGet = (data, res) => {
 };
 
 const callbackPost = (data, res) => {
-    res.send('vuhoangha');
+    res.send({
+        acId: 10,
+        quantityPost: 12,
+    });
 };
 
 app.route('/actor')
@@ -63,7 +66,6 @@ app.route('/actor')
         };
 
         query.insert('actor', JSON.stringify(key), JSON.stringify(value), callbackPost, res);
-        res.send('Hello Post');
     })
     .put((req, res) => {
         res.send('Hello put');
