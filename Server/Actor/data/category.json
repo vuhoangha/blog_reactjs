@@ -1,0 +1,22 @@
+[
+    {
+        "catId": 1,
+        "quantityPost": 0,
+        "catName": "Thể Thao"
+    },
+    {
+        "catId": 2,
+        "quantityPost": 0,
+        "catName": "Quân Sự"
+    },
+    {
+        "catId": 3,
+        "quantityPost": 0,
+        "catName": "Giáo Dục"
+    },
+    {
+        "catId": 4,
+        "quantityPost": 0,
+        "catName": "Ẩm Thực"
+    }
+]

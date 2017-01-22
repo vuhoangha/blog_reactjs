@@ -1,0 +1,61 @@
+const redis = require('redis');
+const config = require('config'); // we load the db location from the JSON files
+const client = redis.createClient(
+    config.port, config.host, { password: config.password }
+);
+
+let isConnect = false;
+
+client.on('connect', () => {
+    isConnect = true;
+});
+
+client.on('error', () => {
+    isConnect = false;
+});
+
+const executeCmd = (command, arg, callback, res) => {
+    if (isConnect) {
+        client.send_command(command, arg, (err, data) => {
+            if (!err) {
+                return callback(data, res);
+            }
+            return callback(null, res);
+        });
+    } else {
+        return callback(null, res);
+    }
+};
+
+module.exports = {
+    selectAll: (entity, callback, res) => {
+        executeCmd('hvals', [entity], callback, res);
+    },
+
+    selectByKey: (entity, key, callback) => {
+        executeCmd('hget', [entity, key], callback);
+    },
+
+    selectByMultiKey: (entity, listKey, callback, res) => {
+        listKey.unshift(entity);
+        executeCmd('hmget', listKey, callback, res);
+    },
+
+    deleteAll: callback => {
+        client.send_command('flushdb', null, err => {
+            if (!err) {
+                return callback();
+            }
+        });
+    },
+
+    insert: (entity, field, value, callback, res) => {
+        const params = [];
+
+        params.push(entity);
+        params.push(field);
+        params.push(value);
+        executeCmd('hset', params, callback, res);
+    },
+
+};

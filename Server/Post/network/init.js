@@ -23,7 +23,7 @@ const callbackGet = (data, res) => {
     res.send(data);
 };
 
-app.get(entityName, (req, res) => {
+app.get(`/${entityName}`, (req, res) => {
     const listKey = [];
 
     if (util.isExistProperty(req.query, 'key')) {
@@ -40,15 +40,15 @@ app.get(entityName, (req, res) => {
     }
 });
 
-app.post(entityName, (req, res) => {
+app.post(`/${entityName}`, (req, res) => {
     res.send('Hello Post');
 });
 
-app.put(entityName, (req, res) => {
+app.put(`/${entityName}`, (req, res) => {
     res.send('Hello put');
 });
 
-app.delete(entityName, (req, res) => {
+app.delete(`/${entityName}`, (req, res) => {
     res.send('Hello delete');
 });
 
