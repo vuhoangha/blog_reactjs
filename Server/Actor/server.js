@@ -32,10 +32,11 @@ const callbackGet = (data, res) => {
 };
 
 const callbackPost = (data, res) => {
-    res.send({
-        acId: 10,
-        quantityPost: 12,
-    });
+    if (data === 1) {
+        res.status(200).send('OK');
+    } else {
+        res.status(404).send('Oh uh, something went wrong');
+    }
 };
 
 app.route('/actor')
