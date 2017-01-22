@@ -32,7 +32,7 @@ const callbackGet = (data, res) => {
 };
 
 const callbackPost = (data, res) => {
-    res.send(data);
+    res.send('vuhoangha');
 };
 
 app.route('/actor')
