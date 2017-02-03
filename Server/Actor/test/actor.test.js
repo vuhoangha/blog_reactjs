@@ -5,6 +5,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server');
 const should = chai.should(); // eslint-disable-line
+const testcoverage = require('../test-coverage/util');
 
 chai.use(chaiHttp);
 
@@ -42,10 +43,27 @@ const post = () => {
     });
 };
 
-describe('Actors', () => {
+const coverage = () => {
+    it('it test coverage code', () => {
+        const sum1 = testcoverage.sum1(2, 1);
+        const sum2 = testcoverage.sum2(2, 1);
+
+        sum1.should.be.a('number');
+        sum1.should.equal(3);
+        sum2.should.be.a('object');
+        sum2.should.have.property('tong').equal(3);
+        sum2.should.have.property('hieu').equal(1);
+    });
+};
+
+describe('Actors Test API', () => {
     beforeEach(done => {
         query.deleteAll(done);
     });
     describe('/GET actor', getAll);
     describe('/POST actor', post);
+});
+
+describe('Actors Test Function', () => {
+    describe('/Coverage code', coverage);
 });

@@ -50,12 +50,7 @@ module.exports = {
     },
 
     insert: (entity, field, value, callback, res) => {
-        const params = [];
-
-        params.push(entity);
-        params.push(field);
-        params.push(value);
-        executeCmd('hset', params, callback, res);
+        executeCmd('hset', [entity, field, value], callback, res);
     },
 
 };
