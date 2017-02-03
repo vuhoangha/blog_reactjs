@@ -1,45 +1,5 @@
 [
     {
-        "acId": 1,
-        "quantityPost": 0,
-        "acName": "Vũ Hoàng Hà"
-    },
-    {
-        "acId": 2,
-        "quantityPost": 0,
-        "acName": "Hoàng Thị Hương"
-    },
-    {
-        "acId": 3,
-        "quantityPost": 0,
-        "acName": "Vũ Khương Duy"
-    },
-    {
-        "acId": 4,
-        "quantityPost": 0,
-        "acName": "Vũ Văn Doanh"
-    },
-    {
-        "catId": 1,
-        "quantityPost": 0,
-        "catName": "Thể Thao"
-    },
-    {
-        "catId": 2,
-        "quantityPost": 0,
-        "catName": "Quân Sự"
-    },
-    {
-        "catId": 3,
-        "quantityPost": 0,
-        "catName": "Giáo Dục"
-    },
-    {
-        "catId": 4,
-        "quantityPost": 0,
-        "catName": "Ẩm Thực"
-    },
-    {
         "postId": 1,
         "postTitle": "Đội bóng của Công Vinh thiếu gì để thành công?",
         "catId": 1,
