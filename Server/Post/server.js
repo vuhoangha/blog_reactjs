@@ -39,7 +39,7 @@ const callbackPost = (data, res) => {
     }
 };
 
-app.route('/category')
+app.route('/post')
     .get((req, res) => {
         const listKey = [];
 
@@ -51,9 +51,9 @@ app.route('/category')
             }
         }
         if (listKey.length > 0) {
-            query.selectByMultiKey('category', listKey, callbackGet, res);
+            query.selectByMultiKey('post', listKey, callbackGet, res);
         } else {
-            query.selectAll('category', callbackGet, res);
+            query.selectAll('post', callbackGet, res);
         }
     })
     .post((req, res) => {
@@ -66,7 +66,7 @@ app.route('/category')
             acName: req.body.acName,
         };
 
-        query.insert('category', JSON.stringify(key), JSON.stringify(value), callbackPost, res);
+        query.insert('post', JSON.stringify(key), JSON.stringify(value), callbackPost, res);
     })
     .put((req, res) => {
         res.send('Hello put');

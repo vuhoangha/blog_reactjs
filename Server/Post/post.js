@@ -11,14 +11,14 @@ const defaultData = {
 };
 
 /*
-*class 'actor'
+*class 'post'
 */
-module.exports = class category {
+module.exports = class post {
 
     /**
-     * constructor get data is 'actor'.
-     * if 'actor' null or undefined , it's setting property value default
-     * @param {actor} data is actor
+     * constructor get data is 'post'.
+     * if 'post' null or undefined , it's setting property value default
+     * @param {post} data is post
      */
     constructor(data = defaultData) {
         this.postId = data.postId;

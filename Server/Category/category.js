@@ -7,14 +7,14 @@ const defaultData = {
 };
 
 /*
-*class 'actor'
+*class 'category'
 */
 module.exports = class category {
 
     /**
-     * constructor get data is 'actor'.
-     * if 'actor' null or undefined , it's setting property value default
-     * @param {actor} data is actor
+     * constructor get data is 'category'.
+     * if 'category' null or undefined , it's setting property value default
+     * @param {category} data is category
      */
     constructor(data = defaultData) {
         this.catId = data.catId;
