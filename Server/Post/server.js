@@ -31,11 +31,19 @@ const callbackGet = (data, res) => {
     res.send(data);
 };
 
-const callbackPost = (data, res) => {
+const callbackInsert = (data, res) => {
+    if (data === 1 || data === 0) {
+        res.status(200).send('OK');
+    } else {
+        res.status(404).send('FAIL');
+    }
+};
+
+const callbackDelete = (data, res) => {
     if (data === 1) {
         res.status(200).send('OK');
     } else {
-        res.status(404).send('Oh uh, something went wrong');
+        res.status(404).send('FAIL');
     }
 };
 
@@ -58,21 +66,30 @@ app.route('/post')
     })
     .post((req, res) => {
         const key = {
-            acId: req.body.acId,
+            postId: req.body.postId,
         };
         const value = {
+            postId: req.body.postId,
+            postTitle: req.body.postTitle,
+            catId: req.body.catId,
             acId: req.body.acId,
-            quantityPost: req.body.quantityPost,
-            acName: req.body.acName,
+            summary: req.body.summary,
+            content: req.body.content,
+            quantityView: req.body.quantityView,
         };
 
-        query.insert('post', JSON.stringify(key), JSON.stringify(value), callbackPost, res);
+        query.insert('post', JSON.stringify(key), JSON.stringify(value), callbackInsert, res);
     })
     .put((req, res) => {
-        res.send('Hello put');
+        const key = req.query.key;
+        const value = JSON.stringify(req.body);
+
+        query.insert('post', key, value, callbackInsert, res);
     })
     .delete((req, res) => {
-        res.send('Hello delete');
+        const key = req.query.key;
+
+        query.delete('post', key, callbackDelete, res);
     });
 
 

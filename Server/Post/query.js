@@ -53,4 +53,8 @@ module.exports = {
         executeCmd('hset', [entity, field, value], callback, res);
     },
 
+    delete: (entity, field, callback, res) => {
+        executeCmd('hdel', [entity, field], callback, res);
+    },
+
 };

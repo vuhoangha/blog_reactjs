@@ -10,35 +10,110 @@ const testcoverage = require('../test-coverage/util');
 chai.use(chaiHttp);
 
 const getAll = () => {
-    it('it should GET all the actors', done => {
+    it('it should GET ALL the category', done => {
+        const record = {
+            catId: 1,
+            quantityPost: 0,
+            catName: 'Thể Thao',
+        };
+
         chai.request(server)
-            .get('/actor')
+            .post('/category')
+            .send(record)
             .end((err, res) => {        // eslint-disable-line
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-                res.body.length.should.be.eql(0);
-                done();
+                should.not.exist(err);
+                if (!err) {
+                    chai.request(server)
+                        .get('/category')
+                        .end((err, res) => {        // eslint-disable-line
+                            res.should.have.status(200);
+                            console.log(res.body);
+                            res.body.should.be.a('array');
+                            res.body.length.should.be.eql(1);
+                            done();
+                        });
+                }
             });
     });
 };
 
 const post = () => {
-    it('it should not POST a actor without acName field', done => {
-        const actor = {
-            acId: 10,
-            quantityPost: 12,
-            acName: 'vuhoangha',
+    it('it should POST a category', done => {
+        const record = {
+            catId: 2,
+            quantityPost: 0,
+            catName: 'Thể Thao',
         };
 
         chai.request(server)
-            .post('/actor')
-            .send(actor)
-            .end((err, res) => {
-                console.log(err);
-                console.log(res.body);
+            .post('/category')
+            .send(record)
+            .end((err, res) => {        // eslint-disable-line
                 res.should.have.status(200);
-                res.body.should.be.a('object');
+                res.text.should.be.a('string');
+                res.text.should.equal('OK');
                 done();
+            });
+    });
+};
+
+const put = () => {
+    it('it should PUT category', done => {
+        const record = {
+            catId: 3,
+            quantityPost: 0,
+            catName: 'Thể Thao',
+        };
+        const key = {
+            catId: 3,
+        };
+
+        chai.request(server)
+            .post('/category')
+            .send(record)
+            .end((err, res) => {        // eslint-disable-line
+                should.not.exist(err);
+                if (!err) {
+                    chai.request(server)
+                        .put(`/category?key=${JSON.stringify(key)}`)
+                        .send(record)
+                        .end((err, res) => {        // eslint-disable-line
+                            res.should.have.status(200);
+                            res.text.should.be.a('string');
+                            res.text.should.equal('OK');
+                            done();
+                        });
+                }
+            });
+    });
+};
+
+const del = () => {
+    it('it should DELETE category', done => {
+        const record = {
+            catId: 4,
+            quantityPost: 0,
+            catName: 'Thể Thao',
+        };
+        const key = {
+            catId: 4,
+        };
+
+        chai.request(server)
+            .post('/category')
+            .send(record)
+            .end((err, res) => {        // eslint-disable-line
+                should.not.exist(err);
+                if (!err) {
+                    chai.request(server)
+                        .delete(`/category?key=${JSON.stringify(key)}`)
+                        .end((err, res) => {        // eslint-disable-line
+                            res.should.have.status(200);
+                            res.text.should.be.a('string');
+                            res.text.should.equal('OK');
+                            done();
+                        });
+                }
             });
     });
 };
@@ -56,14 +131,16 @@ const coverage = () => {
     });
 };
 
-describe('Actors Test API', () => {
+describe('\n\n\nCategory Test API', () => {
     beforeEach(done => {
         query.deleteAll(done);
     });
-    describe('/GET actor', getAll);
-    describe('/POST actor', post);
+    describe('\n\n/GET ALL category', getAll);
+    describe('\n\n/POST category', post);
+    describe('\n\n/PUT category', put);
+    describe('\n\n/DELETE category', del);
 });
 
-describe('Actors Test Function', () => {
-    describe('/Coverage code', coverage);
+describe('\n\n\nCategory Test Function', () => {
+    describe('\n\n/Coverage code', coverage);
 });
