@@ -24,7 +24,7 @@ class SummaryPost extends React.Component {
      * get list post from server
      */
     getListPost() {
-        axios.get('http://127.0.0.1:3000/post')
+        axios.get('http://127.0.0.1:5000/post')
             .then(res => {
                 const posts = res.data.map(obj => {
                     return JSON.parse(obj);
@@ -68,7 +68,7 @@ class SummaryPost extends React.Component {
 
         const posts = this.state.posts.map(post =>
             <div className='summary-post'>
-                <div onClick={() => { this.viewDetail(post); } }>
+                <div onClick={() => { this.viewDetail(post); }}>
                     {post.postTitle}
                 </div>
                 <div>{post.summary}</div>

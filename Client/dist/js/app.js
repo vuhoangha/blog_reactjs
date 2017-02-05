@@ -22307,7 +22307,7 @@ class DetailPost extends React.Component {
             React.createElement("div", null, 
                 React.createElement("div", null, 
                     React.createElement("h3", null, this.state.post.postTitle), 
-                    React.createElement("div", null, this.state.post.summary), 
+                    React.createElement("div", null, this.state.post.content), 
                     React.createElement("button", {onClick: () => { this.addSum(); }}, "Add"), 
                     React.createElement("div", null, this.state.sum)
                 )
@@ -22359,7 +22359,7 @@ class SummaryPost extends React.Component {
      * get list post from server
      */
     getListPost() {
-        axios.get('http://127.0.0.1:3000/post')
+        axios.get('http://127.0.0.1:5000/post')
             .then(res => {
                 const posts = res.data.map(obj => {
                     return JSON.parse(obj);

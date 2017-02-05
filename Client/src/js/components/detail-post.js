@@ -34,7 +34,7 @@ class DetailPost extends React.Component {
             <div>
                 <div>
                     <h3>{this.state.post.postTitle}</h3>
-                    <div>{this.state.post.summary}</div>
+                    <div>{this.state.post.content}</div>
                     <button onClick={() => { this.addSum(); } }>Add</button>
                     <div>{this.state.sum}</div>
                 </div>
