@@ -35,7 +35,7 @@ const callbackInsert = (data, res) => {
     if (data === 1 || data === 0) {
         res.status(200).send('OK');
     } else {
-        res.status(404).send('Oh uh, something went wrong');
+        res.status(404).send('FAIL');
     }
 };
 
@@ -43,7 +43,7 @@ const callbackDelete = (data, res) => {
     if (data === 1) {
         res.status(200).send('OK');
     } else {
-        res.status(404).send('Oh uh, something went wrong');
+        res.status(404).send('FAIL');
     }
 };
 

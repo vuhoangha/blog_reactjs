@@ -9,14 +9,21 @@ const testcoverage = require('../test-coverage/util');
 
 chai.use(chaiHttp);
 
+const actor = {
+    acId: 1,
+    quantityPost: 0,
+    acName: 'vuhoangha',
+};
+
 const getAll = () => {
     it('it should GET all the actors', done => {
         chai.request(server)
             .get('/actor')
             .end((err, res) => {        // eslint-disable-line
                 res.should.have.status(200);
+                console.log(res.body);
                 res.body.should.be.a('array');
-                res.body.length.should.be.eql(0);
+                res.body.length.should.be.eql(1);
                 done();
             });
     });
@@ -24,20 +31,18 @@ const getAll = () => {
 
 const post = () => {
     it('it should not POST a actor without acName field', done => {
-        const actor = {
-            acId: 10,
-            quantityPost: 12,
-            acName: 'vuhoangha',
-        };
-
         chai.request(server)
             .post('/actor')
             .send(actor)
             .end((err, res) => {
+                console.log('Loi : ');
                 console.log(err);
-                console.log(res.body);
+                console.log('Response : ');
+                console.log(res.text);
                 res.should.have.status(200);
-                res.body.should.be.a('object');
+                res.text.should.be.a('string');
+                res.text.should.equal('OK');
+                describe('/GET actor', getAll);
                 done();
             });
     });
@@ -60,7 +65,6 @@ describe('Actors Test API', () => {
     beforeEach(done => {
         query.deleteAll(done);
     });
-    describe('/GET actor', getAll);
     describe('/POST actor', post);
 });
 
