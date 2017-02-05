@@ -31,7 +31,15 @@ const callbackGet = (data, res) => {
     res.send(data);
 };
 
-const callbackPost = (data, res) => {
+const callbackInsert = (data, res) => {
+    if (data === 1 || data === 0) {
+        res.status(200).send('OK');
+    } else {
+        res.status(404).send('Oh uh, something went wrong');
+    }
+};
+
+const callbackDelete = (data, res) => {
     if (data === 1) {
         res.status(200).send('OK');
     } else {
@@ -66,13 +74,18 @@ app.route('/actor')
             acName: req.body.acName,
         };
 
-        query.insert('actor', JSON.stringify(key), JSON.stringify(value), callbackPost, res);
+        query.insert('actor', JSON.stringify(key), JSON.stringify(value), callbackInsert, res);
     })
     .put((req, res) => {
-        res.send('Hello put');
+        const key = req.query.key;
+        const value = JSON.stringify(req.body);
+
+        query.insert('actor', key, value, callbackInsert, res);
     })
     .delete((req, res) => {
-        res.send('Hello delete');
+        const key = req.query.key;
+
+        query.delete('actor', key, callbackDelete, res);
     });
 
 
