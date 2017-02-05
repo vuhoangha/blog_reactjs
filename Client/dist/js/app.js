@@ -22452,7 +22452,7 @@ const Main = require('./components/main');// eslint-disable-line no-unused-vars
 
 const memory = require('./memory');
 
-memory();
+memory.initMemory();
 ReactDom.render(React.createElement(Main, null), document.getElementById('main'));
 
 
@@ -22460,8 +22460,9 @@ ReactDom.render(React.createElement(Main, null), document.getElementById('main')
 const axios = require('axios');
 const dicCategory = {};
 const dicActor = {};
+const memory = {};
 
-const initMemory = () => {
+memory.initMemory = () => {
     axios.get('http://127.0.0.1:3000/actor')
         .then(res => {
             if (res !== null && res.data !== null) {
@@ -22470,7 +22471,6 @@ const initMemory = () => {
 
                     dicActor[actorObj.acId] = actorObj;
                 });
-                console.log(dicActor);
             }
         });
     axios.get('http://127.0.0.1:4000/category')
@@ -22480,11 +22480,21 @@ const initMemory = () => {
 
                 dicCategory[categoryObj.catId] = categoryObj;
             });
-            console.log(dicCategory);
         });
 };
 
-module.exports = initMemory;
+memory.getAllCat = () => {
+    return Object.values(dicCategory)
+        .map(item => JSON.parse(JSON.stringify(item)));
+};
+
+memory.getCat = catId => {
+    if (Reflect.has(dicCategory, catId)) {
+        return JSON.parse(JSON.stringify(dicCategory[catId]));
+    }
+};
+
+module.exports = memory;
 
 
 
