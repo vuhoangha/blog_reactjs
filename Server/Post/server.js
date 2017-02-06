@@ -49,17 +49,8 @@ const callbackDelete = (data, res) => {
 
 app.route('/post')
     .get((req, res) => {
-        const listKey = [];
-
         if (Reflect.has(req.query, 'key')) {
-            const listKeyObject = JSON.parse(req.query.key);
-
-            for (let i = 0; i < listKeyObject.length; i++) {
-                listKey.push(JSON.stringify(listKeyObject[i]));
-            }
-        }
-        if (listKey.length > 0) {
-            query.selectByMultiKey('post', listKey, callbackGet, res);
+            query.selectByMultiKey('post', JSON.stringify(JSON.parse(req.query.key)), callbackGet, res);
         } else {
             query.selectAll('post', callbackGet, res);
         }

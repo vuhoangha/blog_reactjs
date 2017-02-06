@@ -22285,9 +22285,10 @@ class DetailPost extends React.Component {
     constructor(postId) {
         super(postId);
         this.state = {
-            postId,
+            post: null,
             sum: 0,
             loading: true,
+            error: null,
         };
         this.getDetailPost(postId);
     }
@@ -22297,17 +22298,15 @@ class DetailPost extends React.Component {
      * @param {Number} postId id cua POST
      */
     getDetailPost(postId) {
-        const key = { postId: postId };
-
-        axios.get(`http://127.0.0.1:5000/post?key=${JSON.stringify(key)}`)
+        axios.get(`http://127.0.0.1:5000/post?key=${JSON.stringify(postId)}`)
             .then(res => {
-                let post = {};
+                let post1 = null;
 
                 if (Array.isArray(res.data) && res.data.length > 0) {
-                    post = JSON.parse(res.data[0]);
+                    post1 = JSON.parse(res.data[0]);
                 }
                 this.setState({
-                    post,
+                    post: post1,
                     loading: false,
                     error: null,
                 });
@@ -22351,7 +22350,7 @@ class DetailPost extends React.Component {
      * @return {component} SummaryPost
      */
     renderDetailPost() {
-        if (this.state.err !== null) {
+        if (this.state.error !== null) {
             return this.renderError();
         }
         return (
