@@ -22272,6 +22272,7 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":180}],203:[function(require,module,exports){
 const React = require('react');
+const axios = require('axios');
 
 /**
  * Create DetailPost class
@@ -22279,23 +22280,88 @@ const React = require('react');
 class DetailPost extends React.Component {
     /**
      * init class
-     * @param {Object} props prop truyen vao tu html
+     * @param {Number} postId prop truyen vao tu html
      */
-    constructor(props) {
-        super(props);
+    constructor(postId) {
+        super(postId);
         this.state = {
-            post: props.post,
+            postId,
             sum: 0,
+            loading: true,
         };
+        this.getDetailPost(postId);
+    }
+
+    /**
+     * load detail post
+     * @param {Number} postId id cua POST
+     */
+    getDetailPost(postId) {
+        const key = { postId: postId };
+
+        axios.get(`http://127.0.0.1:5000/post?key=${JSON.stringify(key)}`)
+            .then(res => {
+                let post = {};
+
+                if (Array.isArray(res.data) && res.data.length > 0) {
+                    post = JSON.parse(res.data[0]);
+                }
+                this.setState({
+                    post,
+                    loading: false,
+                    error: null,
+                });
+            })
+            .catch(err => {
+                this.setState({
+                    loading: false,
+                    error: err,
+                });
+            });
     }
 
     /**
      * plus state num one point
      */
     addSum() {
-        this.setState({
-            sum: ++this.state.sum,
-        });
+        this.setState({ sum: ++this.state.sum });
+    }
+
+    /**
+         * @return {html} element loading
+         */
+    renderLoading() {
+        return React.createElement("div", null, "Loading...");
+    }
+
+    /**
+     * render error
+     * @return {html} element loading
+     */
+    renderError() {
+        return (
+            React.createElement("div", null, 
+                "Uh oh: ", this.state.error.message
+            )
+        );
+    }
+
+    /**
+     * render detail post
+     * @return {component} SummaryPost
+     */
+    renderDetailPost() {
+        if (this.state.err !== null) {
+            return this.renderError();
+        }
+        return (
+            React.createElement("div", null, 
+                React.createElement("h3", null, this.state.post.postTitle), 
+                React.createElement("div", null, this.state.post.content), 
+                React.createElement("button", {onClick: () => { this.addSum(); }}, "Add"), 
+                React.createElement("div", null, this.state.sum)
+            )
+        );
     }
 
     /**
@@ -22305,12 +22371,9 @@ class DetailPost extends React.Component {
     render() {
         return (
             React.createElement("div", null, 
-                React.createElement("div", null, 
-                    React.createElement("h3", null, this.state.post.postTitle), 
-                    React.createElement("div", null, this.state.post.content), 
-                    React.createElement("button", {onClick: () => { this.addSum(); }}, "Add"), 
-                    React.createElement("div", null, this.state.sum)
-                )
+                this.state.loading ?
+                    this.renderLoading()
+                    : this.renderDetailPost()
             )
         );
     }
@@ -22319,7 +22382,7 @@ class DetailPost extends React.Component {
 module.exports = DetailPost;
 
 
-},{"react":202}],204:[function(require,module,exports){
+},{"axios":1,"react":202}],204:[function(require,module,exports){
 const React = require('react');
 const SummaryPost = require('../components/summary-post');// eslint-disable-line no-unused-vars
 
@@ -22337,6 +22400,7 @@ const React = require('react');
 const axios = require('axios');
 const DetailPost = require('./detail-post');// eslint-disable-line no-unused-vars
 const ReactDom = require('react-dom');
+const memory = require('../memory');
 
 /**
  * Create SummaryPost class
@@ -22362,7 +22426,18 @@ class SummaryPost extends React.Component {
         axios.get('http://127.0.0.1:5000/post')
             .then(res => {
                 const posts = res.data.map(obj => {
-                    return JSON.parse(obj);
+                    const item = JSON.parse(obj);
+                    const category = memory.getCat(item.catId);
+                    const actor = memory.getActor(item.acId);
+                    const newItem = {
+                        postId: item.postId,
+                        postTitle: item.postTitle,
+                        summary: item.summary,
+                        catName: category ? category.catName : null,
+                        acName: actor ? actor.acName : null,
+                    };
+
+                    return newItem;
                 });
 
                 this.setState({
@@ -22382,8 +22457,8 @@ class SummaryPost extends React.Component {
     /**
     * @param {html} element loading
     */
-    viewDetail(post) {
-        ReactDom.render(React.createElement(DetailPost, {post: post}), document.getElementById('main'));
+    viewDetail(postId) {
+        ReactDom.render(React.createElement(DetailPost, {postId: postId}), document.getElementById('main'));
     }
 
     /**
@@ -22403,10 +22478,16 @@ class SummaryPost extends React.Component {
 
         const posts = this.state.posts.map(post =>
             React.createElement("div", {className: "summary-post"}, 
-                React.createElement("div", {onClick: () => { this.viewDetail(post); }}, 
+                React.createElement("div", {onClick: () => { this.viewDetail(post.postId); }}, 
                     post.postTitle
                 ), 
-                React.createElement("div", null, post.summary)
+                React.createElement("div", null, post.summary), 
+                React.createElement("div", {className: "category", onClick: () => { this.viewDetail(post); }}, 
+                    post.catName
+                ), 
+                React.createElement("div", {className: "actor", onClick: () => { this.viewDetail(post); }}, 
+                    post.acName
+                )
             )
         );
 
@@ -22445,15 +22526,17 @@ class SummaryPost extends React.Component {
 module.exports = SummaryPost;
 
 
-},{"./detail-post":203,"axios":1,"react":202,"react-dom":51}],206:[function(require,module,exports){
+},{"../memory":207,"./detail-post":203,"axios":1,"react":202,"react-dom":51}],206:[function(require,module,exports){
 const React = require('react');// eslint-disable-line no-unused-vars
 const ReactDom = require('react-dom');
 const Main = require('./components/main');// eslint-disable-line no-unused-vars
 
 const memory = require('./memory');
 
-memory.initMemory();
-ReactDom.render(React.createElement(Main, null), document.getElementById('main'));
+memory.initMemory(() => {
+    ReactDom.render(React.createElement(Main, null), document.getElementById('main'));
+});
+
 
 
 },{"./components/main":204,"./memory":207,"react":202,"react-dom":51}],207:[function(require,module,exports){
@@ -22462,7 +22545,9 @@ const dicCategory = {};
 const dicActor = {};
 const memory = {};
 
-memory.initMemory = () => {
+memory.initMemory = callback => {
+    let countRes = 0;
+
     axios.get('http://127.0.0.1:3000/actor')
         .then(res => {
             if (res !== null && res.data !== null) {
@@ -22472,14 +22557,24 @@ memory.initMemory = () => {
                     dicActor[actorObj.acId] = actorObj;
                 });
             }
+            countRes++;
+            if (countRes === 2) {
+                return callback();
+            }
         });
     axios.get('http://127.0.0.1:4000/category')
         .then(res => {
-            res.data.map(category => {
-                const categoryObj = JSON.parse(category);
+            if (res !== null && res.data !== null) {
+                res.data.map(category => {
+                    const categoryObj = JSON.parse(category);
 
-                dicCategory[categoryObj.catId] = categoryObj;
-            });
+                    dicCategory[categoryObj.catId] = categoryObj;
+                });
+            }
+            countRes++;
+            if (countRes === 2) {
+                return callback();
+            }
         });
 };
 
@@ -22491,6 +22586,17 @@ memory.getAllCat = () => {
 memory.getCat = catId => {
     if (Reflect.has(dicCategory, catId)) {
         return JSON.parse(JSON.stringify(dicCategory[catId]));
+    }
+};
+
+memory.getAllActor = () => {
+    return Object.values(dicActor)
+        .map(item => JSON.parse(JSON.stringify(item)));
+};
+
+memory.getActor = acId => {
+    if (Reflect.has(dicActor, acId)) {
+        return JSON.parse(JSON.stringify(dicActor[acId]));
     }
 };
 

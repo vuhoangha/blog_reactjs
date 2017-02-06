@@ -4,5 +4,7 @@ const Main = require('./components/main');// eslint-disable-line no-unused-vars
 
 const memory = require('./memory');
 
-memory.initMemory();
-ReactDom.render(<Main />, document.getElementById('main'));
+memory.initMemory(() => {
+    ReactDom.render(<Main />, document.getElementById('main'));
+});
+

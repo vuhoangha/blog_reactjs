@@ -2,7 +2,22 @@
     padding: 20px;
 }
 
-.summary-post > div{
+.summary-post > div:first-child{
     margin: 10px 0;
     cursor: pointer;
+    background: #000;
+    color:#f00;
+    font-size: 25px;
+}
+
+.actor{
+    color: #0b0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.category{
+    color: #00b;
+    cursor: pointer;
+    font-size: 20px;
 }
